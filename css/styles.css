@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f8fa;
+    text-align: center;
+}
+h1 {
+    color: #1da1f2;
+}
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+#query {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #1DA1F2;
+    border-radius: 25px;
+    outline: none;
+    transition: 0.3s;
+}
+#query:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(29, 161, 242, 0.5);
+}
+#buscar {
+    background-color: #1DA1F2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#buscar:hover {
+    background-color: #0056b3;
+}
+#resultado {
+    max-height: 800px; 
+    overflow-y: auto;
+}
+.tweet {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px auto;
+    width: 60%;
+    max-width: 750px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-items: flex-start;
+    text-align: left;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.profile-pic {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.tweet-content {
+    flex-grow: 1;
+    min-width: 0;
+}
+.tweet-content h3 {
+    margin: 0;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+}
+.tweet-content span {
+    color: gray;
+    font-size: 14px;
+}
+.tweet-content p {
+    font-size: 15px;
+    margin: 5px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.tweet-info {
+    font-size: 14px;
+    color: gray;
+}
+.tweet-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.tweet-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #1DA1F2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.tweet-link:hover {
+    background-color: #0d8ae0;
+}
