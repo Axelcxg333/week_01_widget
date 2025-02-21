@@ -31,41 +31,53 @@ $(document).ready(function () {
                                     if (!tweetData || !tweetData.core || !tweetData.core.user_results || !tweetData.legacy) {
                                         return;
                                     }
+                                    if (tweetData.legacy.in_reply_to_status_id_str) {
+                                        return;
+                                    }
+                                    if (tweetData.legacy.extended_entities?.media) {
+                                        const tieneGifOVideo = tweetData.legacy.extended_entities.media.some(media =>
+                                            media.type === "video" || media.type === "animated_gif"
+                                        );
+                                        if (tieneGifOVideo) {
+                                            return;
+                                        }
+                                    }
 
                                     const user = tweetData.core.user_results?.result?.legacy || {};
                                     const tweetText = tweetData.legacy.full_text
-										? tweetData.legacy.full_text.replace(/https?:\/\/t\.co\/\S+/g, "")
-										: "Texto no disponible";
+                                        ? tweetData.legacy.full_text.replace(/https?:\/\/t\.co\/\S+/g, "")
+                                        : "Texto no disponible";
                                     const likes = tweetData.legacy.favorite_count || 0;
                                     const retweets = tweetData.legacy.retweet_count || 0;
                                     const replies = tweetData.legacy.reply_count || 0;
                                     const profileImage = user.profile_image_url_https ? user.profile_image_url_https.replace("_normal", "") : "default.png";
                                     const screenName = user.screen_name || "Desconocido";
                                     const name = user.name || "Usuario Anónimo";
-									const tweetUrl = `https://twitter.com/${screenName}/status/${tweetData.legacy.id_str}`;
+                                    const tweetUrl = `https://twitter.com/${screenName}/status/${tweetData.legacy.id_str}`;
 
                                     let mediaHTML = "";
                                     if (tweetData.legacy.entities?.media) {
                                         tweetData.legacy.entities.media.forEach(media => {
-                                            if (media.type === "photo") { 
+                                            if (media.type === "photo") {
                                                 mediaHTML += `<img src="${media.media_url_https}" class="tweet-image" alt="Imagen adjunta">`;
                                             }
                                         });
                                     }
 
                                     tweetsHTML += `
-										<div class="tweet">
-											<img src="${profileImage}" alt="Imagen de ${name}" class="profile-pic">
-											<div class="tweet-content">
-												<h3>${name} <span>@${screenName}</span></h3>
-												<p>${tweetText}</p>
-												${mediaHTML} <!-- Muestra la imagen si existe -->
-												<div class="tweet-info">
-													❤️ ${likes}  🔄 ${retweets}  🗨️ ${replies}
-												</div>
-												<a href="${tweetUrl}" target="_blank" class="tweet-link">🔗 Ver en Twitter</a>
-											</div>
-										</div>
+                                        <div class="tweet">
+                                            <img src="${profileImage}" alt="Imagen de ${name}" class="profile-pic">
+                                            <div class="tweet-content">
+                                                <h3>${name} <span>@${screenName}</span></h3>
+                                                <p>${tweetText}</p>
+                                                ${mediaHTML} <!-- Muestra la imagen si existe -->
+                                                <div class="tweet-info">
+                                                    ❤️ ${likes}  🔄 ${retweets}  🗨️ ${replies}
+                                                </div>
+                                                <a href="${tweetUrl}" target="_blank" class="tweet-link">🔗 Ver en Twitter</a>
+
+                                            </div>
+                                        </div>
                                     `;
                                 }
                             });
@@ -73,7 +85,7 @@ $(document).ready(function () {
                     });
                 }
 
-                $("#resultado").html(tweetsHTML || "<p>No se encontraron tweets.</p>");
+                $("#resultado").html(tweetsHTML || "<p>No se encontraron tweets sin GIFs ni videos.</p>");
             })
             .fail(function (error) {
                 console.error("Error en la petición:", error);
